@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Joel Rainwater
+ * @copyright Copyright (c) 2020 Joel Rainwater
+ * @package Rain2o_CatalogSync
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Rain2o_CatalogSync::sync" title="Synchronize Catalog" sortOrder="100" module="Rain2o_CatalogSync" parent="Magento_Backend::system_convert" action="catalog_sync/sync/index" resource="Rain2o_CatalogSync::sync"/>
+    </menu>
+</config>
+

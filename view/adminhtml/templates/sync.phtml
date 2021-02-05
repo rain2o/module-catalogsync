@@ -1,0 +1,101 @@
+<?php
+/**
+ * @author Joel Rainwater
+ * @copyright Copyright (c) 2020 Joel Rainwater
+ * @package Rain2o_CatalogSync
+ */
+
+/** @var $block \Rain2o\CatalogSync\Block\Adminhtml\Sync */
+?>
+<div class="sync-catalog-block">
+    <?php if (!$block->getIsReadonly()):?>
+    <div class="sync-catalog">
+        <?php if ($block->getUseContainer()):?>
+        <form id="sync-form"
+              class="admin__fieldset"
+              action="<?= $block->escapeUrl($block->getUrl('catalog_sync/sync/sync')) ?>"
+              method="post"
+              enctype="multipart/form-data">
+        <?php endif; ?>
+            <?= $block->getBlockHtml('formkey') ?>
+            <div class="admin__field field field-basic_behavior with-addon required _required with-note">
+                <label for="behavior" class="admin__field-label label">
+                    <span><?= $block->escapeHtml(__('Sync Behavior')) ?></span>
+                </label>
+                <div class="admin__field-control control">
+                    <div class="admin__field">
+                        <select id="behavior" name="behavior" title="Sync Behavior"
+                                class="sync_behavior required-entry _required select admin__control-select"
+                                required aria-required="true"
+                        >
+                            <option value="" selected="selected">-- Please Select --</option>
+                            <?php foreach ($block->getBehaviorOptions() as $value => $label): ?>
+                                <option value="<?= $block->escapeHtml($value) ?>">
+                                    <?= $block->escapeHtml($label) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="note admin__field-note" id="behavior-note">
+                            <?php foreach ($block->getBehaviorNotes() as $behavior => $note): ?>
+                                <span id="<?= $block->escapeHtml($behavior) ?>_note" style="display: none;">
+                                    <?= /* @noEscape */ $note ?>
+                                </span>
+                            <?php endforeach ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin__field field field-include_images">
+                <label class="label admin__field-label" for="include_images">
+                    <span>Include Images?</span>
+                </label>
+                <div class="admin__field-control control">
+                    <input id="include_images" name="include_images" value="1" title="Include Images" type="checkbox">
+                    <div class="note admin__field-note" id="include_images-note">
+                        Include images in the sync? This will either add/update or
+                        replace images according to the Sync Behavior.
+                    </div>
+                </div>
+            </div>
+            <div class="admin__field field">
+                <label class="admin__field-label label"></label>
+                <div class="admin__field-control control">
+                    <div class="admin__field">
+                        <?= $block->getButtonHtml(__('Sync Catalog'), '', 'sync-submit') ?>
+                    </div>
+                </div>
+            </div>
+        <?php if ($block->getUseContainer()):?>
+        </form>
+        <?php endif; ?>
+        <script>
+        require(
+            ['jquery', 'Magento_Ui/js/modal/alert', "mage/mage", "loadingPopup", 'mage/translate'],
+            function(jQuery, uiAlert) {
+                jQuery('#sync-form').mage('form').mage('validation');
+                (function ($) {
+                    $('#behavior').change(function() {
+                        var selector = '#' + $(this).val() + '_note';
+                        $(selector).show();
+                        $('.note > span:not(' + selector + ')').hide();
+                    });
+                    $('.sync-submit').click(function(){
+                        if($(':input[name="behavior"]').val()) {
+                            $('body').loadingPopup({
+                                timeout: false
+                            });
+
+                            $(this.form).submit();
+                        } else {
+                            uiAlert({
+                                content: $.mage.__('Please select a behavior!')
+                            });
+                        }
+                    });
+                })(jQuery);
+            }
+        );
+        </script>
+    </div>
+    <?php endif; ?>
+</div>

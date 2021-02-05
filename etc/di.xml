@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Rain2o\CatalogSync\Api\ConfigInterface" type="Rain2o\CatalogSync\Model\Config" />
+    <preference for="Rain2o\CatalogSync\Api\MagentoServiceInterface" type="Rain2o\CatalogSync\Model\MagentoService" />
+    <preference for="Rain2o\CatalogSync\Api\SyncHandlerInterface" type="Rain2o\CatalogSync\Model\SyncHandler" />
+</config>

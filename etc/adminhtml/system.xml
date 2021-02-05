@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Joel Rainwater
+ * @copyright Copyright (c) 2020 Joel Rainwater
+ * @package Rain2o_CatalogSync
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="catalog_sync" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+            <class>separator-top</class>
+            <label>Synchronize</label>
+            <tab>catalog</tab>
+            <resource>Rain2o_CatalogSync::config</resource>
+            <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <comment> <![CDATA[
+                    This configuration requires API access to another Magento instance. The API will be used to retrieve the catalog during the sync.<br />
+                    The API Role should have access to Read/View the Catalog data. It does not need write-access as it only retrieves data.
+                ]]></comment>
+                <field id="base_url" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Base URL</label>
+                    <comment>The base URL for the Magento instance to import the catalog from, including protocol. For example https://myshop.com/</comment>
+                    <validate>validate-url</validate>
+                </field>
+                <field id="access_token" translate="label comment" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>API Access Token</label>
+                    <comment>Access Token for the API in the Magento instance provided above. This is used to retrieve the catalog via API.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
